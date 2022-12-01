@@ -17,9 +17,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class NoteServiceImplTest {
-     Note savedNote;
+    Note savedNote;
     @Autowired
-    private  NoteService noteService;
+    private NoteService noteService;
 
     @BeforeEach
     void setUp() {
@@ -28,7 +28,7 @@ class NoteServiceImplTest {
                 .title("My NoteBook title")
                 .content("My Notes")
                 .build();
-    savedNote =  noteService.createNoteBook(note);
+        savedNote = noteService.createNoteBook(note);
     }
 
     @AfterEach
@@ -37,7 +37,7 @@ class NoteServiceImplTest {
     }
 
     @Test
-    void testThatNNoteCanBeRegistered(){
+    void testThatNNoteCanBeRegistered() {
         Note note = Note.builder()
                 .body("My Note book Body")
                 .title("My NoteBook title")
@@ -46,9 +46,10 @@ class NoteServiceImplTest {
         noteService.createNoteBook(note);
         assertEquals(2, noteService.totalNoOfNotes());
     }
+
     @Test
     void testThatNNoteCanBeFindById() throws NoteCannotBeFoundException {
-       Note foundNote = noteService.findNoteById(savedNote.getId());
+        Note foundNote = noteService.findNoteById(savedNote.getId());
         assertThat(foundNote.getId().equals(savedNote.getId()));
         assertThat(foundNote.getId()).isNotNull();
     }
@@ -62,7 +63,7 @@ class NoteServiceImplTest {
     }
 
     @Test
-    void testThatAllNoteCannotBeDeleted() throws NoteCannotBeFoundException {
+    void testThatAllNoteCanBeDeleted() throws NoteCannotBeFoundException {
         noteService.deleteAllNotes();
         assertEquals(0, noteService.totalNoOfNotes());
     }
@@ -74,8 +75,14 @@ class NoteServiceImplTest {
                 .limit(1)
                 .build();
         noteService.findAllNotes(findAllNoteRequest);
-     List<Note> noteList=   noteService.findAllNote(findAllNoteRequest.getPage(),findAllNoteRequest.getLimit());
+        List<Note> noteList = noteService.findAllNote(findAllNoteRequest.getPage(), findAllNoteRequest.getLimit());
         assertEquals("My Notebook Body", noteList.get(0).getBody());
         assertEquals("My NoteBook title", noteList.get(0).getTitle());
     }
+
+    @Test
+    void testThatNoteCanBeUpdated() throws NoteCannotBeFoundException {
+        Note note = new Note();
+    }
+
 }
