@@ -21,8 +21,6 @@ public class User {
     private String name;
     private String email;
     private String phonenumber;
-    private Date createdAt;
-    private String updatedAt;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Note> noteList = new ArrayList<>();
 }

@@ -1,6 +1,7 @@
 package com.bookmanagement.bookmanagementsystem.service;
 
 import com.bookmanagement.bookmanagementsystem.dao.request.FindAllNoteRequest;
+import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,8 +29,10 @@ class NoteServiceImplTest {
                 .body("My Notebook Body")
                 .title("My NoteBook title")
                 .content("My Notes")
+                .createdAt(LocalDateTime.now())
                 .build();
         savedNote = noteService.createNoteBook(note);
+
     }
 
     @AfterEach
@@ -42,6 +46,7 @@ class NoteServiceImplTest {
                 .body("My Note book Body")
                 .title("My NoteBook title")
                 .content("My Notes")
+                .createdAt(LocalDateTime.now())
                 .build();
         noteService.createNoteBook(note);
         assertEquals(2, noteService.totalNoOfNotes());
@@ -70,11 +75,11 @@ class NoteServiceImplTest {
 
     @Test
     void testThatAllNoteCanBeFound() throws NoteCannotBeFoundException {
-        FindAllNoteRequest findAllNoteRequest = FindAllNoteRequest.builder()
-                .page(1)
-                .limit(1)
-                .build();
-        noteService.findAllNotes(findAllNoteRequest);
+        FindAllNoteRequest findAllNoteRequest = new FindAllNoteRequest();
+//                .page(1)
+//                .limit(1)
+//                .build();
+
         List<Note> noteList = noteService.findAllNote(findAllNoteRequest.getPage(), findAllNoteRequest.getLimit());
         assertEquals("My Notebook Body", noteList.get(0).getBody());
         assertEquals("My NoteBook title", noteList.get(0).getTitle());
@@ -82,7 +87,18 @@ class NoteServiceImplTest {
 
     @Test
     void testThatNoteCanBeUpdated() throws NoteCannotBeFoundException {
-        Note note = new Note();
+        UpdateNoteRequest updateNoteRequest = UpdateNoteRequest
+                .builder()
+                .body("Ololades Note Body")
+                .content("Ololade Note content")
+                .title("Ololade Note title")
+                .updatedAt(LocalDateTime.now())
+                .build();
+      Note updatedNote =  noteService.updateNote(updateNoteRequest, savedNote.getId());
+        assertEquals("Ololade Note title", updatedNote.getTitle());
+        assertEquals("Ololade Note content", updatedNote.getContent());
+        assertEquals("Ololades Note Body", updatedNote.getBody());
+        System.out.println(updatedNote);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.bookmanagement.bookmanagementsystem.service;
-
-import com.bookmanagement.bookmanagementsystem.dao.request.FindAllNoteRequest;
+import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.dto.repository.NoteRepository;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
@@ -26,7 +25,7 @@ public class NoteServiceImpl implements NoteService{
                 .body(note.getBody())
                 .content(note.getContent())
                 .title(note.getTitle())
-                .updatedAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .build();
         return noteRepository.save(savedNotes);
     }
@@ -66,14 +65,7 @@ public class NoteServiceImpl implements NoteService{
         }
     }
 
-    @Override
-    public List<Note> findAllNotes(FindAllNoteRequest findAllNoteRequest) {
-        List<Note> notes = new ArrayList<>();
-        if(findAllNoteRequest.getPage() > 0)
-//            findAllNoteRequest.getPage() -=1;
-        noteRepository.findAll();
-        return notes;
-    }
+
 
     @Override
     public List<Note> findAllNote(int page, int limit) {
@@ -88,5 +80,27 @@ public class NoteServiceImpl implements NoteService{
             notes.add(note1);
         }
         return notes;
+    }
+
+    @Override
+    public Note updateNote(UpdateNoteRequest updateNoteRequest, Long id) throws NoteCannotBeFoundException {
+        Optional<Note> foundNote = noteRepository.findNoteById(id);
+
+        if (foundNote.isPresent()) {
+            if (updateNoteRequest.getBody() != null) {
+                foundNote.get().setBody(updateNoteRequest.getBody());
+            }
+            if (updateNoteRequest.getTitle() != null) {
+                foundNote.get().setTitle(updateNoteRequest.getTitle());
+            }
+            if (updateNoteRequest.getContent() != null) {
+                foundNote.get().setContent(updateNoteRequest.getContent());
+            }
+          return   noteRepository.save(foundNote.get());
+
+
+        } else {
+            throw new NoteCannotBeFoundException(NoteCannotBeFoundException.NoteCannotBeFoundException(id));
+        }
     }
 }

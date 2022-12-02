@@ -20,7 +20,8 @@ public class Note {
     private String title;
     private String body;
     private String content;
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
+//    private LocalDateTime updatedAT;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
