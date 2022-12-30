@@ -1,5 +1,6 @@
 package com.bookmanagement.bookmanagementsystem.service;
 
+import com.bookmanagement.bookmanagementsystem.dao.request.CreateNotesRequest;
 import com.bookmanagement.bookmanagementsystem.dao.request.FindAllNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
@@ -25,7 +26,7 @@ class NoteServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        Note note = Note.builder()
+        CreateNotesRequest note = CreateNotesRequest.builder()
                 .body("My Notebook Body")
                 .title("My NoteBook title")
                 .content("My Notes")
@@ -42,13 +43,14 @@ class NoteServiceImplTest {
 
     @Test
     void testThatNNoteCanBeRegistered() {
-        Note note = Note.builder()
-                .body("My Note book Body")
+        CreateNotesRequest note = CreateNotesRequest.builder()
+                 .body("My Notebook Body")
                 .title("My NoteBook title")
                 .content("My Notes")
                 .createdAt(LocalDateTime.now())
                 .build();
-        noteService.createNoteBook(note);
+        savedNote = noteService.createNoteBook(note);
+
         assertEquals(2, noteService.totalNoOfNotes());
     }
 
@@ -75,11 +77,10 @@ class NoteServiceImplTest {
 
     @Test
     void testThatAllNoteCanBeFound() throws NoteCannotBeFoundException {
-        FindAllNoteRequest findAllNoteRequest = new FindAllNoteRequest();
-//                .page(1)
-//                .limit(1)
-//                .build();
-
+        FindAllNoteRequest findAllNoteRequest = FindAllNoteRequest.builder()
+                .page(1)
+                .limit(1)
+                .build();
         List<Note> noteList = noteService.findAllNote(findAllNoteRequest.getPage(), findAllNoteRequest.getLimit());
         assertEquals("My Notebook Body", noteList.get(0).getBody());
         assertEquals("My NoteBook title", noteList.get(0).getTitle());

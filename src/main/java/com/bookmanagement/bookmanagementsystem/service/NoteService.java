@@ -1,5 +1,6 @@
 package com.bookmanagement.bookmanagementsystem.service;
 
+import com.bookmanagement.bookmanagementsystem.dao.request.CreateNotesRequest;
 import com.bookmanagement.bookmanagementsystem.dao.request.FindAllNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
@@ -8,7 +9,7 @@ import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundExcept
 import java.util.List;
 
 public interface NoteService {
-    Note createNoteBook(Note note);
+    Note createNoteBook(CreateNotesRequest note);
 
     long totalNoOfNotes();
 

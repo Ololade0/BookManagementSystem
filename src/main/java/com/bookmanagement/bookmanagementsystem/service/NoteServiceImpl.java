@@ -1,4 +1,5 @@
 package com.bookmanagement.bookmanagementsystem.service;
+import com.bookmanagement.bookmanagementsystem.dao.request.CreateNotesRequest;
 import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.dto.repository.NoteRepository;
@@ -20,7 +21,7 @@ import java.util.Optional;
 public class NoteServiceImpl implements NoteService{
     private final NoteRepository noteRepository;
     @Override
-    public Note createNoteBook(Note note) {
+    public Note createNoteBook(CreateNotesRequest note) {
         Note savedNotes = Note.builder()
                 .body(note.getBody())
                 .content(note.getContent())

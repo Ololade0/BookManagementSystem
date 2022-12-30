@@ -9,6 +9,6 @@ import lombok.*;
 @Builder
 
 public class FindAllNoteRequest {
-    private  int page;
+       private  int page;
     private int limit;
 }

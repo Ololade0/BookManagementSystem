@@ -12,5 +12,5 @@ public class UserRegisterRequest {
     private String name;
     private String email;
     private String phonenumber;
-
+    private String password;
 }
