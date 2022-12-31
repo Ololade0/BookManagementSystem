@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -22,10 +23,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Override
+
+        @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (userRepository.findUserByEmail("adminuser@gmail.com").isEmpty()){
-            User user = new User("Admin", "User","adminuser@gmail.com", passwordEncoder.encode("password1234#"), RoleType.ADMIN);
+            User user = new User("Admin", "User","adminuser@gmail.com", passwordEncoder.encode("2345"), RoleType.ADMIN);
             userRepository.save(user);
         }
     }
