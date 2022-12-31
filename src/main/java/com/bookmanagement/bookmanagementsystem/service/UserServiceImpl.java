@@ -3,6 +3,7 @@ package com.bookmanagement.bookmanagementsystem.service;
 import com.bookmanagement.bookmanagementsystem.dao.request.*;
 import com.bookmanagement.bookmanagementsystem.dao.response.CreateNoteResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dao.response.UserLoginResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.dto.model.Role;
@@ -16,16 +17,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final NoteService noteService;
 
@@ -48,6 +53,7 @@ public class UserServiceImpl implements UserService {
         userRegisterResponse.setMessage("User successfully registered");
         userRegisterResponse.setUserId(savedUser.getId());
         userRegisterResponse.setEmail(savedUser.getEmail());
+        userRegisterResponse.setPassword(savedUser.getPassword());
 //        user.getRoleHashSet().add(new Role(RoleType.USER));
         return userRegisterResponse;
     }
@@ -203,6 +209,34 @@ public class UserServiceImpl implements UserService {
       }
     }
 
+    @Override
+    public UserLoginResponse loginUser(UserLoginRequestModel userLoginRequestModel) {
+        var user = userRepository.findUserByEmail(userLoginRequestModel.getEmail());
+        if(user.isPresent() && user.get().getPassword().equals(userLoginRequestModel.getPassword()));
+        return buildSuccessfulLoginResponse(user.get());
+    }
 
-}
+    private UserLoginResponse buildSuccessfulLoginResponse(User user) {
+        return UserLoginResponse.builder()
+//                .code(201)
+                .message("Login successful")
+                .build();
+
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByEmail(username).orElse(null);
+        if (user != null){
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user.getRoleHashSet()));
+        }
+        throw new UsernameNotFoundException("User with email "+ username +" does not exist");
+    }
+
+    private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleType().name())).collect(Collectors.toSet());
+    }
+    }
+
 

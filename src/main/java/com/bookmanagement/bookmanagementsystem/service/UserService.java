@@ -3,6 +3,7 @@ package com.bookmanagement.bookmanagementsystem.service;
 import com.bookmanagement.bookmanagementsystem.dao.request.*;
 import com.bookmanagement.bookmanagementsystem.dao.response.CreateNoteResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dao.response.UserLoginResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.dto.model.User;
@@ -42,4 +43,7 @@ public interface UserService {
 
 
     User findUserByEmail(String username);
+
+
+      UserLoginResponse loginUser(UserLoginRequestModel userLoginRequestModel);
 }

@@ -12,6 +12,8 @@ public class UserRegisterResponse {
     private String message;
     private Long userId;
     private String email;
+    private String password;
+
 
 
 }

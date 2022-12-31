@@ -2,6 +2,7 @@ package com.bookmanagement.bookmanagementsystem.service;
 import com.bookmanagement.bookmanagementsystem.dao.request.*;
 import com.bookmanagement.bookmanagementsystem.dao.response.CreateNoteResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dao.response.UserLoginResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.dto.model.Role;
@@ -110,6 +111,18 @@ class UserServiceImplTest {
                 .build();
      User updatedUser =   userService.updateUserProfile(updateUserProfileRequest);
         assertEquals("Iseoluwa@gmail.com", updatedUser.getEmail());
+    }
+
+
+    @Test
+    public void UserCanLogin() {
+        UserLoginRequestModel userLoginRequestModel = new UserLoginRequestModel();
+        userLoginRequestModel.setPassword(savedUser.getPassword());
+        userLoginRequestModel.setEmail(savedUser.getEmail());
+       UserLoginResponse response =  userService.loginUser(userLoginRequestModel);
+       assertEquals("Login successful", response.getMessage());
+//       assertEquals(200, response.getCode());
+
     }
 
     @Test

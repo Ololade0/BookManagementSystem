@@ -4,25 +4,34 @@ import com.bookmanagement.bookmanagementsystem.dao.request.*;
 import com.bookmanagement.bookmanagementsystem.dao.response.CreateNoteResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
+import com.bookmanagement.bookmanagementsystem.dto.model.AuthToken;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.dto.model.User;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import com.bookmanagement.bookmanagementsystem.exception.UserCannotBeFoundException;
 
+import com.bookmanagement.bookmanagementsystem.security.jwt.TokenProvider;
 import com.bookmanagement.bookmanagementsystem.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/auth")
 public class NoteController {
     @Autowired
     private UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final TokenProvider tokenProvider;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegisterRequest userRegisterRequest) {
@@ -99,6 +108,18 @@ public class NoteController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequestModel loginRequest) throws UserCannotBeFoundException {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+                        loginRequest.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String token = tokenProvider.generateJWTToken(authentication);
+        User user = userService.findUserByEmail(loginRequest.getEmail());
+        return new ResponseEntity<>(new AuthToken(token, user.getId()), HttpStatus.OK);
     }
 
     @PostMapping("/note")

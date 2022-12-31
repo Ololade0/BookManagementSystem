@@ -11,5 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AuthToken {
     private String token;
-    private String id;
+    private Long id;
+
+
 }
