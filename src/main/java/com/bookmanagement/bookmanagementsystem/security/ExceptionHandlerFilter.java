@@ -1,6 +1,5 @@
 package com.bookmanagement.bookmanagementsystem.security;
 
-import com.bookmanagement.bookmanagementsystem.controller.ApiError;
 import com.bookmanagement.bookmanagementsystem.exception.APIError;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,6 @@
-package com.bookmanagement.bookmanagementsystem.controller;
+package com.bookmanagement.bookmanagementsystem.exception.exceptionHandler;
 
 import lombok.*;
-import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter

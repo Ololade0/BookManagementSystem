@@ -9,7 +9,6 @@ import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.dto.model.User;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import com.bookmanagement.bookmanagementsystem.exception.UserCannotBeFoundException;
-
 import com.bookmanagement.bookmanagementsystem.security.jwt.TokenProvider;
 import com.bookmanagement.bookmanagementsystem.service.UserService;
 import lombok.AllArgsConstructor;
@@ -24,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -44,7 +44,23 @@ public class NoteController {
 
     }
 
-    @GetMapping("{userId}")
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequestModel loginRequest) throws UserCannotBeFoundException {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+                        loginRequest.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final String token = tokenProvider.generateJWTToken(authentication);
+        User user = userService.findUserByEmail(loginRequest.getEmail());
+        return new ResponseEntity<>(new AuthToken(token, user.getId()), HttpStatus.OK);
+    }
+
+
+
+
+    @GetMapping("{userId}/id")
     public ResponseEntity<?> findUserById(@PathVariable Long userId) {
         try {
             User foundUser = userService.findById(userId);
@@ -110,17 +126,6 @@ public class NoteController {
 
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequestModel loginRequest) throws UserCannotBeFoundException {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
-                        loginRequest.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final String token = tokenProvider.generateJWTToken(authentication);
-        User user = userService.findUserByEmail(loginRequest.getEmail());
-        return new ResponseEntity<>(new AuthToken(token, user.getId()), HttpStatus.OK);
-    }
 
     @PostMapping("/note")
     public ResponseEntity<?> createNote(@RequestBody CreateNotesRequest note) {
@@ -156,7 +161,7 @@ public class NoteController {
         }
     }
 
-    @DeleteMapping("/deletallenote")
+    @DeleteMapping("/deleteallnote")
     public ResponseEntity<?> deleteAllNote() {
         String deletedUser = userService.deleteAllNotes();
         return new ResponseEntity<>(deletedUser, HttpStatus.CREATED);

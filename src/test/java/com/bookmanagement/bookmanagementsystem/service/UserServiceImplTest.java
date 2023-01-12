@@ -5,7 +5,6 @@ import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UserLoginResponse;
 import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
-import com.bookmanagement.bookmanagementsystem.dto.model.Role;
 import com.bookmanagement.bookmanagementsystem.dto.model.User;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import org.junit.jupiter.api.AfterEach;
@@ -16,9 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +50,7 @@ class UserServiceImplTest {
                 .content("Ololade Content")
                 .createdAt(LocalDateTime.now())
                 .build();
-      createdNote =  userService.createNote(createNotesRequest);
+        createdNote =  userService.createNote(createNotesRequest);
     }
 
     @AfterEach
@@ -86,7 +83,7 @@ class UserServiceImplTest {
     @Test
     void testThatAllUserCanBeFound(){
         FindAllUserRequest findAllUserRequest = new FindAllUserRequest();
-        findAllUserRequest.setNumberOfPserPages(1);
+        findAllUserRequest.setNumberOfPerPages(1);
         findAllUserRequest.setPageNumber(1);
         assertEquals(1L,userService.findAllUser(findAllUserRequest).getTotalElements());
     }
@@ -109,7 +106,7 @@ class UserServiceImplTest {
                 .phonenumber("09031807593")
                 .name("Iseoluwa")
                 .build();
-     User updatedUser =   userService.updateUserProfile(updateUserProfileRequest);
+        User updatedUser =   userService.updateUserProfile(updateUserProfileRequest);
         assertEquals("Iseoluwa@gmail.com", updatedUser.getEmail());
     }
 
@@ -119,8 +116,8 @@ class UserServiceImplTest {
         UserLoginRequestModel userLoginRequestModel = new UserLoginRequestModel();
         userLoginRequestModel.setPassword(savedUser.getPassword());
         userLoginRequestModel.setEmail(savedUser.getEmail());
-       UserLoginResponse response =  userService.loginUser(userLoginRequestModel);
-       assertEquals("Login successful", response.getMessage());
+        UserLoginResponse response =  userService.loginUser(userLoginRequestModel);
+        assertEquals("Login successful", response.getMessage());
 //       assertEquals(200, response.getCode());
 
     }
@@ -144,9 +141,9 @@ class UserServiceImplTest {
                 .userId(savedUser.getUserId())
                 .noteId(createdNote.getId())
                 .build();
-    Note foundNote =    userService.findNoteById(findNoteByIdRequest);
-    assertThat(foundNote.getId()).isEqualTo(createdNote.getId());
-    assertThat(foundNote).isNotNull();
+        Note foundNote =    userService.findNoteById(findNoteByIdRequest);
+        assertThat(foundNote.getId()).isEqualTo(createdNote.getId());
+        assertThat(foundNote).isNotNull();
     }
 
     @Test
@@ -162,7 +159,7 @@ class UserServiceImplTest {
                 .limit(1)
                 .page(1)
                 .build();
-      List<Note> noteList=  userService.findAllNotes(findAllNoteRequest.getPage(), findAllNoteRequest.getLimit());
+        List<Note> noteList=  userService.findAllNotes(findAllNoteRequest.getPage(), findAllNoteRequest.getLimit());
         assertEquals("Ololades NOteBody", noteList.get(0).getBody());
 
     }
@@ -174,7 +171,7 @@ class UserServiceImplTest {
                 .userId(savedUser.getUserId())
                 .noteId(createdNote.getId())
                 .build();
-     String deletedNote =   userService.deleteNoteById(deleteNoteByIdRequest);
+        String deletedNote =   userService.deleteNoteById(deleteNoteByIdRequest);
         assertEquals(0, userService.totalNotes());
         assertThat(deletedNote).isNotNull();
     }
@@ -194,7 +191,7 @@ class UserServiceImplTest {
                 .title("Ololades NoteTitle")
                 .content("Ololade Content")
                 .build();
-    UpdateNoteResponse updateNoteResponse = userService.updateNote(updateNoteRequest, createdNote.getId());
+        UpdateNoteResponse updateNoteResponse = userService.updateNote(updateNoteRequest, createdNote.getId());
         assertEquals("Note Successfully Updated", updateNoteResponse.getMessage());
 
     }

@@ -1,7 +1,6 @@
 package com.bookmanagement.bookmanagementsystem.service;
 
 import com.bookmanagement.bookmanagementsystem.dao.request.CreateNotesRequest;
-import com.bookmanagement.bookmanagementsystem.dao.request.FindAllNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;

@@ -1,6 +1,5 @@
-package com.bookmanagement.bookmanagementsystem.controller.exceptionHandler;
+package com.bookmanagement.bookmanagementsystem.exception.exceptionHandler;
 
-import com.bookmanagement.bookmanagementsystem.controller.ApiError;
 import com.bookmanagement.bookmanagementsystem.exception.UserCannotBeFoundException;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.http.HttpStatus;

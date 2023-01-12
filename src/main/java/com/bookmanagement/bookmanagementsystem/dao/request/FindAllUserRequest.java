@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class FindAllUserRequest {
-        private  int numberOfPserPages;
+        private  int numberOfPerPages;
         private int pageNumber;
    }

@@ -10,5 +10,4 @@ import lombok.*;
 @ToString
 public class UpdateNoteResponse {
     private String message;
-    private Long id;
-}
+  }

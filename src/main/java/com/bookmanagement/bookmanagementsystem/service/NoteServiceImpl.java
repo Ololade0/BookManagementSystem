@@ -97,6 +97,10 @@ public class NoteServiceImpl implements NoteService{
             if (updateNoteRequest.getContent() != null) {
                 foundNote.get().setContent(updateNoteRequest.getContent());
             }
+
+            if (updateNoteRequest.getUpdatedAt() != null) {
+                foundNote.get().setCreatedAt(updateNoteRequest.getUpdatedAt());
+            }
           return   noteRepository.save(foundNote.get());
 
 

@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setName(userRegisterRequest.getName());
         user.setPhonenumber(userRegisterRequest.getPhonenumber());
         user.setRoleHashSet(new HashSet<>());
-       user.setPassword(passwordEncoder.encode(userRegisterRequest.getPassword()));
-       user.getRoleHashSet().add(new Role(RoleType.USER));
+        user.setPassword(passwordEncoder.encode(userRegisterRequest.getPassword()));
+        user.getRoleHashSet().add(new Role(RoleType.USER));
         User savedUser = userRepository.save(user);
 
 
@@ -60,14 +60,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User findById(Long userId) {
-     Optional<User> foundUser =  userRepository.findUserById(userId);
-     if(foundUser.isEmpty()){
-         throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(userId));
-     }
-     else {
-         return foundUser.get();
+        Optional<User> foundUser =  userRepository.findUserById(userId);
+        if(foundUser.isEmpty()){
+            throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(userId));
+        }
+        else {
+            return foundUser.get();
 
-     }
+        }
 
     }
 
@@ -87,27 +87,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Page<User> findAllUser(FindAllUserRequest findAllUserRequest) {
-        Pageable pageable = PageRequest.of(findAllUserRequest.getPageNumber()-1, findAllUserRequest.getNumberOfPserPages());
+        Pageable pageable = PageRequest.of(findAllUserRequest.getPageNumber()-1, findAllUserRequest.getNumberOfPerPages());
         return userRepository.findAll(pageable);
     }
 
     @Override
     public String deleteUserById(Long userId) {
-       Optional<User> foundUser = userRepository.findUserById(userId);
-       if(foundUser.isPresent()){
-           userRepository.deleteById(userId);
-           return "User successfully deleted";
-       }
+        Optional<User> foundUser = userRepository.findUserById(userId);
+        if(foundUser.isPresent()){
+            userRepository.deleteById(userId);
+            return "User successfully deleted";
+        }
 
         else {
             throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(userId));
 
-       }
+        }
     }
 
     @Override
     public User updateUserProfile(UpdateUserProfileRequest updateUserProfileRequest) {
-    Optional<User> foundUser =    userRepository.findUserById(updateUserProfileRequest.getUserId());
+        Optional<User> foundUser =    userRepository.findUserById(updateUserProfileRequest.getUserId());
         if(foundUser.isPresent()){
             if(updateUserProfileRequest.getName() != null){
                 foundUser.get().setName(updateUserProfileRequest.getName());
@@ -120,9 +120,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if(updateUserProfileRequest.getPhonenumber() != null){
                 foundUser.get().setPhonenumber(updateUserProfileRequest.getPhonenumber());
             }
-           return userRepository.save(foundUser.get());
+            return userRepository.save(foundUser.get());
         }
-        
+
         else {
             throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(updateUserProfileRequest.getUserId()));
         }
@@ -131,21 +131,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public CreateNoteResponse createNote(CreateNotesRequest createNotesRequest) {
         Note createdNote = noteService.createNoteBook(createNotesRequest);
-     Optional<User> foundUser =   userRepository.findUserById(createNotesRequest.getUserId());
-     if(foundUser.isEmpty()){
-         throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(createdNote.getId()));
-     }
+        Optional<User> foundUser =   userRepository.findUserById(createNotesRequest.getUserId());
+        if(foundUser.isEmpty()){
+            throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(createdNote.getId()));
+        }
 
-     else {
-             foundUser.get().getNoteList().add(createdNote);
-             userRepository.save(foundUser.get());
-         }
-     CreateNoteResponse createNoteResponse = new CreateNoteResponse();
-     createNoteResponse.setMessage("Note successfully created");
-     createNoteResponse.setId(createdNote.getId());
-     return createNoteResponse;
+        else {
+            foundUser.get().getNoteList().add(createdNote);
+            userRepository.save(foundUser.get());
+        }
+        CreateNoteResponse createNoteResponse = new CreateNoteResponse();
+        createNoteResponse.setMessage("Note successfully created");
+        createNoteResponse.setId(createdNote.getId());
+        return createNoteResponse;
 
-         }
+    }
 
     @Override
     public long totalNotes() {
@@ -162,51 +162,52 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public Note findNoteById(FindNoteByIdRequest findNoteByIdRequest) throws NoteCannotBeFoundException {
         Optional<User> foundUser = userRepository.findUserById(findNoteByIdRequest.getUserId());
         if (foundUser.isPresent()) {
-           return noteService.findNoteById(findNoteByIdRequest.getNoteId());
+            return noteService.findNoteById(findNoteByIdRequest.getNoteId());
         }
-            throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(findNoteByIdRequest.getUserId()));
+        throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(findNoteByIdRequest.getUserId()));
 
 
     }
 
     @Override
     public String deleteNoteById(DeleteNoteByIdRequest deleteNoteByIdRequest) throws NoteCannotBeFoundException{
-      Optional<User> foundUser =  userRepository.findUserById(deleteNoteByIdRequest.getUserId());
-      if(foundUser.isPresent()){
-          noteService.deleteNoteById(deleteNoteByIdRequest.getNoteId());
-          return "Note successfully deleted";
-      }
+        Optional<User> foundUser =  userRepository.findUserById(deleteNoteByIdRequest.getUserId());
+        if(foundUser.isPresent()){
+            noteService.deleteNoteById(deleteNoteByIdRequest.getNoteId());
+            return "Note successfully deleted";
+        }
 
         throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(deleteNoteByIdRequest.getUserId()));
     }
 
     @Override
     public UpdateNoteResponse updateNote(UpdateNoteRequest updateNoteRequest, Long noteId) throws NoteCannotBeFoundException {
-    Optional<User> foundUser =    userRepository.findUserById(updateNoteRequest.getUserId());
-    if(foundUser.isPresent()){
-        noteService.updateNote(updateNoteRequest, noteId );
-    }
+        Optional<User> foundUser =    userRepository.findUserById(updateNoteRequest.getUserId());
+        if(foundUser.isPresent()){
+            noteService.updateNote(updateNoteRequest, noteId );
+        }
         UpdateNoteResponse updateNoteResponse = new UpdateNoteResponse();
-    updateNoteResponse.setMessage("Note Successfully Updated");
-    return updateNoteResponse;
+        updateNoteResponse.setMessage("Note Successfully Updated");
+
+        return updateNoteResponse;
     }
 
     @Override
     public List<Note> findAllNotes(int page, int limit) {
-      return   noteService.findAllNote(page, limit);
+        return noteService.findAllNote(page, limit);
 
     }
 
     @Override
     public User findUserByEmail(String username) {
-      Optional<User> foundEmail =  userRepository.findUserByEmail(username);
+        Optional<User> foundEmail =  userRepository.findUserByEmail(username);
 
-      if(foundEmail.isPresent()){
-          return foundEmail.get();
-      }
-      else {
-          throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(username));
-      }
+        if(foundEmail.isPresent()){
+            return foundEmail.get();
+        }
+        else {
+            throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(username));
+        }
     }
 
     @Override
@@ -237,6 +238,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(Set<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getRoleType().name())).collect(Collectors.toSet());
     }
-    }
-
+}
 

@@ -44,7 +44,7 @@ class NoteServiceImplTest {
     @Test
     void testThatNNoteCanBeRegistered() {
         CreateNotesRequest note = CreateNotesRequest.builder()
-                 .body("My Notebook Body")
+                .body("My Notebook Body")
                 .title("My NoteBook title")
                 .content("My Notes")
                 .createdAt(LocalDateTime.now())
@@ -95,7 +95,7 @@ class NoteServiceImplTest {
                 .title("Ololade Note title")
                 .updatedAt(LocalDateTime.now())
                 .build();
-      Note updatedNote =  noteService.updateNote(updateNoteRequest, savedNote.getId());
+        Note updatedNote =  noteService.updateNote(updateNoteRequest, savedNote.getId());
         assertEquals("Ololade Note title", updatedNote.getTitle());
         assertEquals("Ololade Note content", updatedNote.getContent());
         assertEquals("Ololades Note Body", updatedNote.getBody());
