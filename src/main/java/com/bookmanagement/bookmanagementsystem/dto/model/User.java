@@ -3,6 +3,7 @@ package com.bookmanagement.bookmanagementsystem.dto.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Transactional
 @Entity(name = "user")
 public class User {
     @Id
@@ -24,11 +26,13 @@ public class User {
     private String password;
     private boolean isEnabled;
 
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Note> noteList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Role> roleHashSet = new HashSet<>();
+
 
     public User(String name, String email, String phonenumber, String password, RoleType roleType) {
         this.name = name;
@@ -42,4 +46,8 @@ public class User {
 
         }
     }
+
+    public User(String name) {
+    }
 }
+

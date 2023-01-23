@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 public class CreateNotesRequest {
     private Long userId;
-    private String title;
+     private String title;
     private String body;
     private String content;
     private LocalDateTime createdAt;

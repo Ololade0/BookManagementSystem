@@ -2,6 +2,7 @@ package com.bookmanagement.bookmanagementsystem.service;
 import com.bookmanagement.bookmanagementsystem.dao.request.CreateNotesRequest;
 import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
 import com.bookmanagement.bookmanagementsystem.dto.model.Note;
+import com.bookmanagement.bookmanagementsystem.dto.model.User;
 import com.bookmanagement.bookmanagementsystem.dto.repository.NoteRepository;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,10 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public Note createNoteBook(CreateNotesRequest note) {
         Note savedNotes = Note.builder()
+
                 .body(note.getBody())
                 .content(note.getContent())
+
                 .title(note.getTitle())
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -108,4 +111,6 @@ public class NoteServiceImpl implements NoteService{
             throw new NoteCannotBeFoundException(NoteCannotBeFoundException.NoteCannotBeFoundException(id));
         }
     }
+
+
 }

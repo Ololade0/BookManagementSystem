@@ -15,7 +15,7 @@ public class NoteCannotBeFoundException extends Throwable {
     }
 
 
-    public static String NoteCannotBeFoundException(String title){
-        return "Note with " + title + "cannot be found" ;
+    public static String NoteCannotBeFoundException(String content){
+        return "Note with " + content + "cannot be found" ;
     }
 }

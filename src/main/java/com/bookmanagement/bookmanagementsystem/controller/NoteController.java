@@ -12,6 +12,7 @@ import com.bookmanagement.bookmanagementsystem.exception.UserCannotBeFoundExcept
 import com.bookmanagement.bookmanagementsystem.security.jwt.TokenProvider;
 import com.bookmanagement.bookmanagementsystem.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -24,14 +25,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class NoteController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
+
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegisterRequest userRegisterRequest) {
@@ -70,6 +73,13 @@ public class NoteController {
         }
 
     }
+
+
+      @GetMapping("/username/{name}/content/{content}")
+    public  List<User> getUsersByUsernameAndNotesContent(String name, String content) {
+        return userService.findUserByNameAndNoteContent(name, content);
+    }
+
 
     @GetMapping("{email}")
     public ResponseEntity<?> findUserByEmail(@PathVariable String email) {

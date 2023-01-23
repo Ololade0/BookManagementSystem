@@ -12,7 +12,7 @@ import com.bookmanagement.bookmanagementsystem.dto.model.User;
 import com.bookmanagement.bookmanagementsystem.dto.repository.UserRepository;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import com.bookmanagement.bookmanagementsystem.exception.UserCannotBeFoundException;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,16 +29,21 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
+
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
+
     private final NoteService noteService;
 
     private final PasswordEncoder passwordEncoder;
 
 
+
     @Override
     public UserRegisterResponse registerUser(UserRegisterRequest userRegisterRequest) throws UserCannotBeFoundException {
+
+
         User user = new User();
         user.setEmail(userRegisterRequest.getEmail());
         user.setName(userRegisterRequest.getName());
@@ -54,7 +59,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRegisterResponse.setUserId(savedUser.getId());
         userRegisterResponse.setEmail(savedUser.getEmail());
         userRegisterResponse.setPassword(savedUser.getPassword());
-//        user.getRoleHashSet().add(new Role(RoleType.USER));
+        user.getRoleHashSet().add(new Role(RoleType.USER));
         return userRegisterResponse;
     }
 
@@ -143,6 +148,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         CreateNoteResponse createNoteResponse = new CreateNoteResponse();
         createNoteResponse.setMessage("Note successfully created");
         createNoteResponse.setId(createdNote.getId());
+        createNoteResponse.setContent(createdNote.getContent());
         return createNoteResponse;
 
     }
@@ -208,6 +214,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         else {
             throw new UserCannotBeFoundException(UserCannotBeFoundException.UserCannotBeFoundException(username));
         }
+    }
+
+
+
+    @Override
+    public List<User> findUserByNameAndNoteContent(String name, String content) {
+        return userRepository.findUserByNameAndNoteList(name, content);
     }
 
     @Override

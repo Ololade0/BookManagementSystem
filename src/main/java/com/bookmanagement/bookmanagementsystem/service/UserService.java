@@ -44,6 +44,8 @@ public interface UserService {
 
     User findUserByEmail(String username);
 
+     List <User> findUserByNameAndNoteContent(String name, String content);
+
 
       UserLoginResponse loginUser(UserLoginRequestModel userLoginRequestModel);
 }

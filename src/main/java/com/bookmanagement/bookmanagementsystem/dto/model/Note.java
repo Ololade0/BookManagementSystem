@@ -12,17 +12,22 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @Entity(name = "note")
-
 public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title;
+     private String title;
     private String body;
     private String content;
     private LocalDateTime createdAt;
-//    private LocalDateTime updatedAT;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Note(String title, String body, String content) {
+        this.title = title;
+        this.body = body;
+        this.content = content;
+    }
 }

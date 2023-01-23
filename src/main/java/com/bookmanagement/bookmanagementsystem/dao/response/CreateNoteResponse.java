@@ -10,4 +10,5 @@ import lombok.*;
 public class CreateNoteResponse {
     private Long id;
     private String message;
+    private String content;
 }

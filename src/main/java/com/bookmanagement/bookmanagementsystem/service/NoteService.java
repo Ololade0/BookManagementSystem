@@ -17,7 +17,9 @@ public interface NoteService {
     Note findNoteById(Long id) throws NoteCannotBeFoundException;
 
     String deleteNoteById(Long id) throws NoteCannotBeFoundException;
-        List<Note> findAllNote(int page, int limit);
+    List<Note> findAllNote(int page, int limit);
 
     Note updateNote(UpdateNoteRequest updateNoteRequest, Long id) throws NoteCannotBeFoundException;
+
+
 }
