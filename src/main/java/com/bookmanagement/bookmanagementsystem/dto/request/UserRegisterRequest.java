@@ -1,9 +1,6 @@
-package com.bookmanagement.bookmanagementsystem.dao.request;
+package com.bookmanagement.bookmanagementsystem.dto.request;
 
-import com.bookmanagement.bookmanagementsystem.dto.model.Note;
 import lombok.*;
-
-import java.util.List;
 
 @Setter
 @Getter

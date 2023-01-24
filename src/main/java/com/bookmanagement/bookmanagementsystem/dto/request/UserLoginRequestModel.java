@@ -1,4 +1,4 @@
-package com.bookmanagement.bookmanagementsystem.dao.request;
+package com.bookmanagement.bookmanagementsystem.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,9 +1,8 @@
 package com.bookmanagement.bookmanagementsystem.service;
-import com.bookmanagement.bookmanagementsystem.dao.request.CreateNotesRequest;
-import com.bookmanagement.bookmanagementsystem.dao.request.UpdateNoteRequest;
-import com.bookmanagement.bookmanagementsystem.dto.model.Note;
-import com.bookmanagement.bookmanagementsystem.dto.model.User;
-import com.bookmanagement.bookmanagementsystem.dto.repository.NoteRepository;
+import com.bookmanagement.bookmanagementsystem.dto.request.CreateNotesRequest;
+import com.bookmanagement.bookmanagementsystem.dto.request.UpdateNoteRequest;
+import com.bookmanagement.bookmanagementsystem.dao.model.Note;
+import com.bookmanagement.bookmanagementsystem.dao.repository.NoteRepository;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;

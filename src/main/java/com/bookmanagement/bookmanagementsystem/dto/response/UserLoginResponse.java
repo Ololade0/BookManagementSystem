@@ -1,4 +1,4 @@
-package com.bookmanagement.bookmanagementsystem.dao.response;
+package com.bookmanagement.bookmanagementsystem.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

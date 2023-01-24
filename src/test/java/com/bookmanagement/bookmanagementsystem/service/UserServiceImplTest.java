@@ -1,14 +1,14 @@
 package com.bookmanagement.bookmanagementsystem.service;
 import com.bookmanagement.bookmanagementsystem.controller.NoteController;
-import com.bookmanagement.bookmanagementsystem.dao.request.*;
-import com.bookmanagement.bookmanagementsystem.dao.response.CreateNoteResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UserLoginResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
-import com.bookmanagement.bookmanagementsystem.dto.model.Note;
-import com.bookmanagement.bookmanagementsystem.dto.model.User;
+
+import com.bookmanagement.bookmanagementsystem.dto.response.CreateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UpdateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UserLoginResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UserRegisterResponse;
+import com.bookmanagement.bookmanagementsystem.dao.model.Note;
+import com.bookmanagement.bookmanagementsystem.dao.model.User;
+import com.bookmanagement.bookmanagementsystem.dto.request.*;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
-import org.aspectj.weaver.ast.Not;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

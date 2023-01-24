@@ -1,6 +1,6 @@
 package com.bookmanagement.bookmanagementsystem.config;
 
-import com.bookmanagement.bookmanagementsystem.dto.repository.UserRepository;
+import com.bookmanagement.bookmanagementsystem.dao.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

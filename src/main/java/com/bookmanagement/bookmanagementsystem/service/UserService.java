@@ -1,12 +1,12 @@
 package com.bookmanagement.bookmanagementsystem.service;
-
-import com.bookmanagement.bookmanagementsystem.dao.request.*;
-import com.bookmanagement.bookmanagementsystem.dao.response.CreateNoteResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UserLoginResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
-import com.bookmanagement.bookmanagementsystem.dto.model.Note;
-import com.bookmanagement.bookmanagementsystem.dto.model.User;
+;
+import com.bookmanagement.bookmanagementsystem.dto.response.CreateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UpdateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UserLoginResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UserRegisterResponse;
+import com.bookmanagement.bookmanagementsystem.dao.model.Note;
+import com.bookmanagement.bookmanagementsystem.dao.model.User;
+import com.bookmanagement.bookmanagementsystem.dto.request.*;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import com.bookmanagement.bookmanagementsystem.exception.UserCannotBeFoundException;
 import org.springframework.data.domain.Page;

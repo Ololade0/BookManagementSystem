@@ -1,6 +1,6 @@
-package com.bookmanagement.bookmanagementsystem.dto.repository;
+package com.bookmanagement.bookmanagementsystem.dao.repository;
 
-import com.bookmanagement.bookmanagementsystem.dto.model.Note;
+import com.bookmanagement.bookmanagementsystem.dao.model.Note;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

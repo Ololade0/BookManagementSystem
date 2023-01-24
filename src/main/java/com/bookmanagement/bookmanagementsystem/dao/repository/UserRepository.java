@@ -1,6 +1,6 @@
-package com.bookmanagement.bookmanagementsystem.dto.repository;
+package com.bookmanagement.bookmanagementsystem.dao.repository;
 
-import com.bookmanagement.bookmanagementsystem.dto.model.User;
+import com.bookmanagement.bookmanagementsystem.dao.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

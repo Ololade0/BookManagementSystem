@@ -1,19 +1,17 @@
 package com.bookmanagement.bookmanagementsystem.controller;
 
-import com.bookmanagement.bookmanagementsystem.dao.request.*;
-import com.bookmanagement.bookmanagementsystem.dao.response.CreateNoteResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UpdateNoteResponse;
-import com.bookmanagement.bookmanagementsystem.dao.response.UserRegisterResponse;
-import com.bookmanagement.bookmanagementsystem.dto.model.AuthToken;
-import com.bookmanagement.bookmanagementsystem.dto.model.Note;
-import com.bookmanagement.bookmanagementsystem.dto.model.User;
+import com.bookmanagement.bookmanagementsystem.dto.response.CreateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UpdateNoteResponse;
+import com.bookmanagement.bookmanagementsystem.dto.response.UserRegisterResponse;
+import com.bookmanagement.bookmanagementsystem.dao.model.AuthToken;
+import com.bookmanagement.bookmanagementsystem.dao.model.Note;
+import com.bookmanagement.bookmanagementsystem.dao.model.User;
+import com.bookmanagement.bookmanagementsystem.dto.request.*;
 import com.bookmanagement.bookmanagementsystem.exception.NoteCannotBeFoundException;
 import com.bookmanagement.bookmanagementsystem.exception.UserCannotBeFoundException;
 import com.bookmanagement.bookmanagementsystem.security.jwt.TokenProvider;
 import com.bookmanagement.bookmanagementsystem.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

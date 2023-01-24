@@ -1,4 +1,4 @@
-package com.bookmanagement.bookmanagementsystem.dto.model;
+package com.bookmanagement.bookmanagementsystem.dao.model;
 
 import lombok.*;
 
