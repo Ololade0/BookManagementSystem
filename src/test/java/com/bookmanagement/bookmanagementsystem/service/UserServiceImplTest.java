@@ -32,9 +32,6 @@ class UserServiceImplTest {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private NoteController noteController;
-
 
 
 
